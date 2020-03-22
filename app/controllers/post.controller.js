@@ -33,12 +33,32 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-    
+    const title = req.query.title;
+    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+
+    Post.findAll({ where: condition })
+        .then((data) => {
+            res.send(data);
+        }).catch((err) => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occured while find post"
+            });
+        });
 };
 
 // Find a single Post with an id
 exports.findOne = (req, res) => {
+    const id = req.params.id;
 
+    Post.findByPk(id)
+        .then((data) => {
+            res.send(data);
+        }).catch((err) => {
+            res.status(500).send({
+                message: "Error retrieving post with id=" + id
+            });
+        });
 };
 
 // Update a Post by the id in the request

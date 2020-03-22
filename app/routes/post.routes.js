@@ -6,5 +6,11 @@ module.exports = app => {
     // Create a new post
     router.post("/", posts.create);
 
+    // Retrieve all posts
+    router.get("/", posts.findAll);
+
+    // Retrieve single post
+    router.get("/:id", posts.findOne);
+
     app.use("/api/posts", router);
 }
