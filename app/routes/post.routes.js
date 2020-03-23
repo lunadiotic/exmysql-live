@@ -9,6 +9,9 @@ module.exports = app => {
     // Retrieve all posts
     router.get("/", posts.findAll);
 
+    // Retrieve published posts
+    router.get("/published", posts.findAllPublished);
+
     // Retrieve single post
     router.get("/:id", posts.findOne);
 
