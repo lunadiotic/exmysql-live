@@ -86,11 +86,42 @@ exports.update = (req, res) => {
 
 // Delete a Post with the specified id in the request
 exports.delete = (req, res) => {
+    const id = req.params.id;
 
+    Post.destroy({
+        where: { id: id }
+    }).then((result) => {
+        if (result == 1) {
+            res.send({
+                message: "Post was deleted successfully"
+            })
+        } else {
+            res.send({
+                message: `Cannot delete post with id=${id}`
+            })
+        }
+    }).catch((err) => {
+        res.status(500).send({
+            message: "Could not delete post with id=" + id
+        })
+    });
 };
 
 // Delete all Posts from the database.
 exports.deleteAll = (req, res) => {
+    Post.destroy({
+        where: {},
+        truncate: false
+    }).then((result) => {
+        res.send({
+            message: `${result} Posts were deleted successfully!`
+        });
+    }).catch((err) => {
+        res.status(500).send({
+            message: 
+                err.message || "Some error occurred while removing all posts."
+        });
+    });
 
 };
 

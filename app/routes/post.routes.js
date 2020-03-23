@@ -15,5 +15,11 @@ module.exports = app => {
     // Update post
     router.put("/:id", posts.update);
 
+    // Delete single post
+    router.delete("/:id", posts.delete);
+
+    // Delete all posts
+    router.delete("/", posts.deleteAll);
+
     app.use("/api/posts", router);
 }
