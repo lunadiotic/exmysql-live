@@ -63,7 +63,25 @@ exports.findOne = (req, res) => {
 
 // Update a Post by the id in the request
 exports.update = (req, res) => {
+    const id = req.params.id;
 
+    Post.update(req.body, {
+        where: { id: id }
+    }).then((result) => {
+        if ( result == 1 ) {
+            res.send({
+                message: "Post was updated successfully"
+            });
+        } else {
+            res.send({
+                message: `Cannot update Post with id=${id}.`
+            })
+        }
+    }).catch((err) => {
+        res.status(500).send({
+            message: "Error updating post with id=" + id
+        })
+    });
 };
 
 // Delete a Post with the specified id in the request

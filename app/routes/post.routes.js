@@ -12,5 +12,8 @@ module.exports = app => {
     // Retrieve single post
     router.get("/:id", posts.findOne);
 
+    // Update post
+    router.put("/:id", posts.update);
+
     app.use("/api/posts", router);
 }
